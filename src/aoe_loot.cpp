@@ -461,6 +461,10 @@ bool AOELootServer::CanPacketReceive(WorldSession* session, WorldPacket const& p
     if (!session)
         return true;
 
+    // Bot sessions (mod-playerbots; no client socket) loot one corpse at a time, as before
+    if (session->IsHeadless())
+        return true;
+
     Player* player = session->GetPlayer();
     if (!player)
         return true;
